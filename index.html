@@ -11,36 +11,37 @@
   <textarea id="mensaje" placeholder="Escribe algo..."></textarea><br /><br />
   <button onclick="enviar()">Enviar</button>
 
-  <script>
-    function enviar() {
-      const nombre = document.getElementById("nombre").value.trim();
-      const mensaje = document.getElementById("mensaje").value.trim();
+  <<script>
+  function enviar() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
 
-      if (!nombre || !mensaje) {
-        alert("Por favor, llena ambos campos.");
-        return;
-      }
-
-      // Construir datos tipo application/x-www-form-urlencoded
-      const data = new URLSearchParams();
-      data.append("nombre", nombre);
-      data.append("mensaje", mensaje);
-
-      fetch("https://script.google.com/macros/s/AKfycbyXqc2Z2H1-QUUam48NwA0cFNjXqlwnKXS1j-Xmwaa1sMHi9eh-3mfjo9xuxrolZRfhIA/exec", {
-        method: "POST",
-        body: data,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.result === "success") alert("¡Enviado con éxito!");
-          else alert("Error: " + data.error);
-        })
-        .catch(e => {
-          alert("Error de red al enviar.");
-          console.error(e);
-        });
+    if (!nombre || !mensaje) {
+      alert("Por favor, llena ambos campos.");
+      return;
     }
-  </script>
+
+    fetch("https://script.google.com/macros/s/AKfycbyXqc2Z2H1-QUUam48NwA0cFNjXqlwnKXS1j-Xmwaa1sMHi9eh-3mfjo9xuxrolZRfhIA/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"  // 👈 Muy importante
+      },
+      body: JSON.stringify({ nombre, mensaje })  // 👈 También
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.result === "success") {
+        alert("¡Enviado con éxito!");
+      } else {
+        alert("Error: " + data.error);
+      }
+    })
+    .catch(e => {
+      alert("🚫 Error de red al enviar.");
+      console.error("Fetch error:", e);
+    });
+  }
+</script>
+
 </body>
 </html>
