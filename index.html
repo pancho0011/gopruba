@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Formulario conectado a Google Sheets</title>
+  <meta charset="UTF-8">
+  <title>Formulario simple a Google Sheets</title>
 </head>
 <body>
   <h2>Formulario</h2>
+  <form action="https://script.google.com/macros/s/AKfycbz3gXCtx966rXuTkpbSZj4WbPrysVcrciK2Vv2QzC8f6OIvivE5y0N6zRfmpPnxj_Kkjw/exec" method="POST">
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br><br>
 
-  <form 
-    action="https://script.google.com/macros/s/AKfycbxakz6MZ3XQt9vukq51QbZTqkF7kQYOPFPU7K0lFaL5kDSz_vHXPIufkFKe4ihSuYrb4A/exec" 
-    method="POST" 
-    target="hidden_iframe" 
-    onsubmit="alert('¡Formulario enviado con éxito!');"
-  >
-    <input name="nombre" placeholder="Tu nombre" required /><br /><br />
-    <textarea name="mensaje" placeholder="Escribe algo..." required></textarea><br /><br />
+    <label for="mensaje">Mensaje:</label><br>
+    <textarea id="mensaje" name="mensaje" required></textarea><br><br>
+
     <button type="submit">Enviar</button>
   </form>
 
-  <!-- iframe oculto para que el formulario no recargue la página -->
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
+  <p>Después de enviar, serás redirigido. Si quieres evitarlo, te doy el código también con JavaScript sin fetch.</p>
 </body>
 </html>
