@@ -5,6 +5,7 @@
   <title>Formulario conectado a Google Sheets</title>
 </head>
 <body>
+
   <h2>Formulario</h2>
 
   <input id="nombre" placeholder="Tu nombre" /><br /><br />
@@ -21,6 +22,7 @@
         return;
       }
 
+      // Crear datos en formato URL encoded (formulario clásico)
       const formData = new URLSearchParams();
       formData.append("nombre", nombre);
       formData.append("mensaje", mensaje);
@@ -28,22 +30,19 @@
       fetch("https://script.google.com/macros/s/AKfycbyXqc2Z2H1-QUUam48NwA0cFNjXqlwnKXS1j-Xmwaa1sMHi9eh-3mfjo9xuxrolZRfhIA/exec", {
         method: "POST",
         body: formData,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
       })
-        .then((r) => r.text())
-        .then((text) => {
-          const data = JSON.parse(text);
-          if (data.result === "success") alert("¡Enviado con éxito!");
-          else alert("Error: " + data.error);
-        })
-        .catch((e) => {
-          alert("Error de red al enviar.");
-          console.error(e);
-        });
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === "success") alert("¡Enviado con éxito!");
+        else alert("Error: " + data.error);
+      })
+      .catch(e => {
+        alert("Error de red al enviar.");
+        console.error(e);
+      });
     }
   </script>
+
 </body>
 </html>
-
