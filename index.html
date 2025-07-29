@@ -22,24 +22,25 @@
         return;
       }
 
-      // Crear datos en formato URL encoded (formulario clásico)
-      const formData = new URLSearchParams();
-      formData.append("nombre", nombre);
-      formData.append("mensaje", mensaje);
-
       fetch("https://script.google.com/macros/s/AKfycbyXqc2Z2H1-QUUam48NwA0cFNjXqlwnKXS1j-Xmwaa1sMHi9eh-3mfjo9xuxrolZRfhIA/exec", {
         method: "POST",
-        body: formData,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        body: JSON.stringify({ nombre, mensaje }),
+        headers: { "Content-Type": "application/json" }
       })
       .then(response => response.json())
       .then(data => {
-        if (data.result === "success") alert("¡Enviado con éxito!");
-        else alert("Error: " + data.error);
+        if (data.result === "success") {
+          alert("¡Enviado con éxito!");
+          // Opcional: limpiar formulario
+          document.getElementById("nombre").value = "";
+          document.getElementById("mensaje").value = "";
+        } else {
+          alert("Error: " + data.error);
+        }
       })
-      .catch(e => {
+      .catch(error => {
         alert("Error de red al enviar.");
-        console.error(e);
+        console.error("Fetch error:", error);
       });
     }
   </script>
