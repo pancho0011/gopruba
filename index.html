@@ -23,21 +23,18 @@
       }
 
       fetch("https://script.google.com/macros/s/AKfycbykQtMHWrBLB9xxJwI9hndwTDgaKsGjHRhDZ-jby0ofWUFijy6T37HE5TUUq_m_HDVGWQ/exec", {
-  method: "POST",
-  body: JSON.stringify({ nombre, mensaje }),
-  headers: { "Content-Type": "application/json" }
-})
-.then(r => r.json())
-.then(data => {
-  if(data.result === "success") alert("¡Enviado con éxito!");
-  else alert("Error: " + data.error);
-})
-.catch(e => alert("Error de red al enviar."));
-        }
+        method: "POST",
+        body: JSON.stringify({ nombre, mensaje }),
+        headers: { "Content-Type": "application/json" }
       })
-      .catch(error => {
-        alert("🚫 Error de red al enviar.");
-        console.error("Error:", error);
+      .then(r => r.json())
+      .then(data => {
+        if(data.result === "success") alert("¡Enviado con éxito!");
+        else alert("Error: " + data.error);
+      })
+      .catch(e => {
+        alert("Error de red al enviar.");
+        console.error(e);
       });
     }
   </script>
